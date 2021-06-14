@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Weather from "./Weather";
 
 import { Form, Button,Image,Row,Col } from "react-bootstrap";
 
@@ -9,6 +10,7 @@ class City extends React.Component {
     super(props);
     this.state = {
       locData: "",
+      wheatherState:{},
       errMsg: "",
       displayErrMsg: false,
       displayMap: false,
@@ -16,8 +18,8 @@ class City extends React.Component {
   }
   getLocation = async (event) => {
     event.preventDefault();
-    let seachQuery = event.target.searchQuery.value;
-    let locURL = `https://us1.locationiq.com/v1/search.php?key=pk.021dad5b6766910aca9a337aabfde6e7&q=${seachQuery}&format=json`;
+    let searchQuery = event.target.searchQuery.value;
+    let locURL = `https://eu1.locationiq.com/v1/search.php?key=pk.021dad5b6766910aca9a337aabfde6e7&q=${searchQuery}&format=json`;
     try {
       let locResult = await axios.get(locURL);
       console.log(locResult.data);
@@ -25,11 +27,17 @@ class City extends React.Component {
         locData: locResult.data[0],
         displayMap: true,
       });
+      let WeatherUrl=`http://localhost:3060/getCity?cityLan=${this.state.locData[0].lat}&cityLon=${this.state.locData[0].lon}`;
+      let weatherObject= await axios.get(WeatherUrl);
+      this.setState({
+        wheatherState: weatherObject.data,
+      })
     } catch {
       this.setState({
+      
         errMsg: "OOPS! 404 Error This is a bad Response",
         displayErrMsg: true,
-      });
+      })
     }
   };
   render() {
@@ -57,13 +65,16 @@ class City extends React.Component {
         <p>{this.state.locData.display_name}</p>
         <p>{this.state.locData.lon}</p>
         <p>{this.state.locData.lat}</p>
+        {this.state.displayErrMsg && this.state.errMsg }
         {this.state.displayMap && (
           <Image
             src={`https://maps.locationiq.com/v3/staticmap?key=pk.021dad5b6766910aca9a337aabfde6e7&center=${this.state.locData.lat},${this.state.locData.lon}&zoom=15&size=480x450&format=png&maptype=roadmap&markers=icon:small-red-cutout|${this.state.locData.lat},${this.state.locData.lon},&markers=icon:small-red-cutout|${this.state.locData.lat},${this.state.locData.lon}`}
             alt="map" fluid thumbnail 
           />
+          
         )}
-        {this.state.displayErrMsg && this.state.errMsg }
+          <Weather seeWeathetState={this.state.wheatherState}/>
+        
       </div>
       </div>
     );
