@@ -3,8 +3,15 @@ import React from 'react'
     render() {
         return(
             <div>
-                {<p>{this.props.seeWeathetState.description} </p>}
-                 {<p>{this.props.seeWeathetState.date}</p>}
+                 {this.props.seeWeathetState.map((item, indx)=>{
+                 return(
+                     <div key={indx}>
+                         {<p> wather for day {indx +1} : {item.description}</p>}
+                         {<p>date  : {item.date}</p>}
+                         </div>
+                 )
+                 }
+                 )}
             </div>
         );
     }
