@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Weather from "./Weather";
+import Movies from "./Movies";
 
 import { Form, Button, Image, Row, Col } from "react-bootstrap";
 
@@ -10,7 +11,8 @@ class City extends React.Component {
     super(props);
     this.state = {
       locData: "",
-      wheatherState: {},
+      wheatherState: [],
+      movies: [],
       errMsg: "",
       displayErrMsg: false,
       displayMap: false,
@@ -23,17 +25,23 @@ class City extends React.Component {
       let searchQuery = event.target.searchQuery.value;
       let locURL = `https://eu1.locationiq.com/v1/search.php?key=pk.30819d0d14daf4a98f432c25d296412a&q=${searchQuery}&format=json`;
       let locResult = await axios.get(locURL);
-      let WeatherUrl = `https://weather-cityexplorer55.herokuapp.com/getCity?cityLan=${locResult.data[0].lat}&cityLon=${locResult.data[0].lon}`;
+      let WeatherUrl = `http://localhost:3060/forcast?lat=${locResult.data[0].lat}&lon=${locResult.data[0].lon}`;
+      // http://localhost:3060/forcast?lat=${locResult.data[0].lat}&lon=${locResult.data[0].lon}
+      let movieUrl = `http://localhost:3060/movies?cityName=${searchQuery}`;
+
       let weatherObject = await axios.get(WeatherUrl);
+      let moviesName =await axios.get(movieUrl);
       console.log(locResult.data);
-      // console.log(this.state.locData.lat);
+      // console.log(locResult.data[0].lat);
       // console.log(this.state.locData.lon);
-      
+
       this.setState({
         locData: locResult.data[0],
         displayMap: true,
         wheatherState: weatherObject.data,
+        movies :moviesName.data,
       });
+      console.log(this.state.movies);
       // console.log(weatherObject.data);
     } catch {
       this.setState({
@@ -78,6 +86,7 @@ class City extends React.Component {
             />
           )}
           <Weather seeWeathetState={this.state.wheatherState} />
+      < Movies displayMovies={this.state.movies} />
         </div>
       </div>
     );
