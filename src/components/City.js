@@ -19,7 +19,7 @@ class City extends React.Component {
   getLocation = async (event) => {
     event.preventDefault();
     let searchQuery = event.target.searchQuery.value;
-    let locURL = `https://eu1.locationiq.com/v1/search.php?key=pk.021dad5b6766910aca9a337aabfde6e7&q=${searchQuery}&format=json`;
+    let locURL = `https://us1.locationiq.com/v1/search.php?key=pk.30819d0d14daf4a98f432c25d296412a&q=${searchQuery}&format=json`;
     try {
       let locResult = await axios.get(locURL);
       console.log(locResult.data);
@@ -27,6 +27,8 @@ class City extends React.Component {
         locData: locResult.data[0],
         displayMap: true,
       });
+      console.log(this.state.locData.lat);
+      console.log(this.state.locData.lon);
       let WeatherUrl=`https://weather-cityexplorer55.herokuapp.com/getCity?cityLan=${this.state.locData[0].lat}&cityLon=${this.state.locData[0].lon}`;
       let weatherObject= await axios.get(WeatherUrl);
       this.setState({
@@ -63,15 +65,14 @@ class City extends React.Component {
         </Form>
         <div className="container-sec2">
         <p>{this.state.locData.display_name}</p>
-        <p>{this.state.locData.lon}</p>
         <p>{this.state.locData.lat}</p>
+        <p>{this.state.locData.lon}</p>
         {this.state.displayErrMsg && this.state.errMsg }
         {this.state.displayMap && (
           <Image
-            src={`https://maps.locationiq.com/v3/staticmap?key=pk.021dad5b6766910aca9a337aabfde6e7&center=${this.state.locData.lat},${this.state.locData.lon}&zoom=15&size=480x450&format=png&maptype=roadmap&markers=icon:small-red-cutout|${this.state.locData.lat},${this.state.locData.lon},&markers=icon:small-red-cutout|${this.state.locData.lat},${this.state.locData.lon}`}
+            src={`https://maps.locationiq.com/v3/staticmap?key=pk.30819d0d14daf4a98f432c25d296412a&center=${this.state.locData.lat},${this.state.locData.lon}&zoom=15&size=480x450&format=png&maptype=roadmap&markers=icon:small-red-cutout|${this.state.locData.lat},${this.state.locData.lon},&markers=icon:small-red-cutout|${this.state.locData.lat},${this.state.locData.lon}`}
             alt="map" fluid thumbnail 
           />
-          
         )}
           <Weather seeWeathetState={this.state.wheatherState}/>
         
