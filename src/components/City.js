@@ -27,7 +27,7 @@ class City extends React.Component {
         locData: locResult.data[0],
         displayMap: true,
       });
-      let WeatherUrl=`http://localhost:3060/getCity?cityLan=${this.state.locData[0].lat}&cityLon=${this.state.locData[0].lon}`;
+      let WeatherUrl=`https://weather-cityexplorer55.herokuapp.com/getCity?cityLan=${this.state.locData[0].lat}&cityLon=${this.state.locData[0].lon}`;
       let weatherObject= await axios.get(WeatherUrl);
       this.setState({
         wheatherState: weatherObject.data,
