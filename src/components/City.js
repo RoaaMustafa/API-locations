@@ -25,9 +25,9 @@ class City extends React.Component {
       let searchQuery = event.target.searchQuery.value;
       let locURL = `https://eu1.locationiq.com/v1/search.php?key=pk.30819d0d14daf4a98f432c25d296412a&q=${searchQuery}&format=json`;
       let locResult = await axios.get(locURL);
-      let WeatherUrl = `http://localhost:3060/forcast?lat=${locResult.data[0].lat}&lon=${locResult.data[0].lon}`;
+      let WeatherUrl = `https://weather-cityexplorer55.herokuapp.com/forcast?lat=${locResult.data[0].lat}&lon=${locResult.data[0].lon}`;
       // http://localhost:3060/forcast?lat=${locResult.data[0].lat}&lon=${locResult.data[0].lon}
-      let movieUrl = `http://localhost:3060/movies?cityName=${searchQuery}`;
+      let movieUrl = `https://weather-cityexplorer55.herokuapp.com/movies?cityName=${searchQuery}`;
 
       let weatherObject = await axios.get(WeatherUrl);
       let moviesName =await axios.get(movieUrl);
@@ -66,16 +66,16 @@ class City extends React.Component {
               </Col>
               <Col>
                 <Button variant="primary" type="submit" value="search">
-                  Search
+                  Explore!
                 </Button>
               </Col>
             </Row>
           </Form.Group>
         </Form>
+        
         <div className="container-sec2">
-          <p>{this.state.locData.display_name}</p>
-          <p>{this.state.locData.lat}</p>
-          <p>{this.state.locData.lon}</p>
+          <p>  {this.state.locData.display_name}</p>
+          <p>  {this.state.locData.lat} ,{this.state.locData.lon}</p>
           {this.state.displayErrMsg && this.state.errMsg}
           {this.state.displayMap && (
             <Image
