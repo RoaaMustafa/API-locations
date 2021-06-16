@@ -6,15 +6,18 @@ class WeatherDay extends React.Component {
     return (
       <aside className="weather-list">
         <ListGroup id="weather-list">
-          {this.props.descWeather.map((item, indx) => {
+      {this.props.descWeather.map((item, indx) => {
             return (
               <div key={indx}>
-                <ListGroup.Item  horizontal>
-                📅 date : {item.date}   , 🌤️ day {indx + 1} : {item.description} 
+
+                <ListGroup.Item style={{backgroundColor:'#2422'}} horizontal>
+               <h5>📅 date : {item.date} </h5>   
+               <p> 🌤️ day {indx + 1} : {item.description} </p>
                 </ListGroup.Item >
               </div>
             );
-          })}
+          })} 
+
         </ListGroup>
       </aside>
     );

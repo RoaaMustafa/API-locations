@@ -73,15 +73,15 @@ class City extends React.Component {
           </Form.Group>
         </Form>
         
-        <div className="container-sec2">
-          <p>  {this.state.locData.display_name}</p>
-          <p>  {this.state.locData.lat} ,{this.state.locData.lon}</p>
+        <div className="container-sec2" style={{alignItems:"center"}}>
+          <Col > {this.state.locData.display_name}</Col>
+          <Col >  {this.state.locData.lat} ,{this.state.locData.lon}</Col>
           {this.state.displayErrMsg && this.state.errMsg}
           {this.state.displayMap && (
             <Image
               src={`https://maps.locationiq.com/v3/staticmap?key=pk.30819d0d14daf4a98f432c25d296412a&center=${this.state.locData.lat},${this.state.locData.lon}&zoom=15&size=480x450&format=png&maptype=roadmap&markers=icon:small-red-cutout|${this.state.locData.lat},${this.state.locData.lon},&markers=icon:small-red-cutout|${this.state.locData.lat},${this.state.locData.lon}`}
               alt="map"
-              fluid
+             style={{alignItems:"center" , borderRadius:"30px"}}
               thumbnail
             />
           )}
