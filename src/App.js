@@ -6,9 +6,9 @@ class App extends React.Component{
   render(){
     return(
       <div >
-        <header style={{backgroundColor:'#2422'}}>
+     
         <h1 className="header-sec" > City Explorer </h1>
-        </header>
+      
         <City
         />
       </div>
