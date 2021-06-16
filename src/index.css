@@ -24,3 +24,11 @@ code {
 .container-form{
   text-align: center;
 }
+.weather-sec{
+  float: left;
+  width: 400px;
+}
+.weather-list{
+  float: left;
+  width: 400px;
+}
